@@ -4,6 +4,7 @@ import { Button, Form } from "react-bootstrap";
 
 const AddStudent = () => {
   const [name, setName] = useState("");
+  const [img, setImg] = useState("");
 
   async function addStudentToDb(newStudent) {
     let res = await axios.post("http://localhost:8000/students", newStudent);
@@ -12,10 +13,13 @@ const AddStudent = () => {
 
   const handleSave = () => {
     let newObj = {
-      name: name,
+      name,
+      img,
       created_at: Date.now(),
     };
     addStudentToDb(newObj);
+    setImg("");
+    setName("");
   };
 
   return (
@@ -24,6 +28,11 @@ const AddStudent = () => {
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="name"
+      />
+      <Form.Control
+        value={img}
+        onChange={(e) => setImg(e.target.value)}
+        placeholder="image"
       />
       <Button onClick={handleSave}>ADD</Button>
     </div>
